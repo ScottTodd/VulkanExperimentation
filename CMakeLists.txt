@@ -7,8 +7,13 @@ set(NAME vulkan_experimentation)
 project(${NAME})
 
 include_directories(third_party)
+include_directories(third_party/glm)
 include_directories(src)
 
+# Hello World Test
 add_executable(HelloWorld src/hello_world.cc)
-
 install(TARGETS HelloWorld DESTINATION bin)
+
+# GLM Include Test
+add_executable(GLMInclude src/test_glm_include.cc)
+install(TARGETS GLMInclude DESTINATION bin)
