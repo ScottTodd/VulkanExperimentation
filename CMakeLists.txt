@@ -10,10 +10,37 @@ include_directories(third_party)
 include_directories(third_party/glm)
 include_directories(src)
 
-# Hello World Test
+# Hello World Test.
 add_executable(HelloWorld src/hello_world.cc)
 install(TARGETS HelloWorld DESTINATION bin)
 
-# GLM Include Test
+# GLM Include Test.
 add_executable(GLMInclude src/test_glm_include.cc)
 install(TARGETS GLMInclude DESTINATION bin)
+
+# Set BASE_DIRECTORY.
+if (NOT BASE_DIRECTORY)
+  set(BASE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+endif()
+
+message(STATUS "BASE_DIRECTORY = ${BASE_DIRECTORY}")
+message(STATUS "CMAKE_CURRENT_SOURCE_DIR = ${CMAKE_CURRENT_SOURCE_DIR}")
+
+# Include cmake modules.
+set(CMAKE_MODULE_PATH
+  ${BASE_DIRECTORY}/third_party/nvidia/nvpro_shared_sources/cmake
+)
+
+# Find VulkanSDK.
+find_package(VulkanSDK REQUIRED)
+if(VULKANSDK_FOUND)
+  message(STATUS "Found VulkanSDK, using it.")
+  add_definitions(-DUSEVULKANSDK)
+  include_directories(${VULKANSDK_INCLUDE_DIR})
+  list(APPEND LIBRARIES_OPTIMIZED ${VULKAN_LIB})
+  list(APPEND LIBRARIES_DEBUG ${VULKAN_LIB})
+  list(APPEND PACKAGE_SOURCE_FILES ${VULKANSDK_HEADERS})
+  source_group(OPTIX FILES  ${VULKANSDK_HEADERS})
+else()
+  message(SEND_ERROR "Did not find VulkanSDK, please resolve.")
+endif()
