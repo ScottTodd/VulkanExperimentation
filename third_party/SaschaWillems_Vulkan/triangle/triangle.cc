@@ -17,6 +17,7 @@
 #include <assert.h>
 #include <vector>
 
+#define _USE_MATH_DEFINES
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
