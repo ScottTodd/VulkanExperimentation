@@ -8,6 +8,9 @@ project(${NAME})
 
 include_directories(third_party)
 include_directories(third_party/glm)
+include_directories(third_party/SaschaWillems_Vulkan/base)
+include_directories(third_party/assimp/include)
+include_directories(third_party/gli)
 include_directories(src)
 
 # Hello World Test.
@@ -48,3 +51,7 @@ endif()
 # VulkanSDK Include Test.
 add_executable(VulkanSDKInclude src/test_vulkan_sdk_include.cc)
 install(TARGETS VulkanSDKInclude DESTINATION bin)
+
+# Triangle from SaschaWillems.
+add_executable(Triangle third_party/SaschaWillems_Vulkan/triangle/triangle.cc)
+install(TARGETS Triangle DESTINATION bin)
