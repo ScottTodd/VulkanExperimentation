@@ -44,3 +44,7 @@ if(VULKANSDK_FOUND)
 else()
   message(SEND_ERROR "Did not find VulkanSDK, please resolve.")
 endif()
+
+# VulkanSDK Include Test.
+add_executable(VulkanSDKInclude src/test_vulkan_sdk_include.cc)
+install(TARGETS VulkanSDKInclude DESTINATION bin)
