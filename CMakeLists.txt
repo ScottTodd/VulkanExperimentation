@@ -34,7 +34,7 @@ set(CMAKE_MODULE_PATH
 # Find VulkanSDK.
 find_package(VulkanSDK REQUIRED)
 if(VULKANSDK_FOUND)
-  message(STATUS "Found VulkanSDK, using it.")
+  message(STATUS "Found VulkanSDK!")
   add_definitions(-DUSEVULKANSDK)
   include_directories(${VULKANSDK_INCLUDE_DIR})
   list(APPEND LIBRARIES_OPTIMIZED ${VULKAN_LIB})
