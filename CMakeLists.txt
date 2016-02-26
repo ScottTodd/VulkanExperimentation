@@ -17,22 +17,27 @@ include_directories(third_party/SaschaWillems_Vulkan/base)
 
 # Include cmake modules.
 set(CMAKE_MODULE_PATH
-  ${BASE_DIRECTORY}/cmake
+  ${CMAKE_SOURCE_DIR}/cmake
 )
 
 if(WIN32)
-  find_library(ASSIMP_LIB NAMES assimp PATHS ${CMAKE_SOURCE_DIR}/libs/assimp)
+  # Windows (could be 64 bit).
+  find_library(ASSIMP_LIB NAMES assimp
+               PATHS ${CMAKE_SOURCE_DIR}/third_party/libs/assimp)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DVK_USE_PLATFORM_WIN32_KHR")
 else()
+  # Linux?
   find_library(ASSIMP_LIB NAMES assimp libassimp.dll.a
                PATHS ${CMAKE_SOURCE_DIR}/third_party/libs/assimp)
   find_package(XCB REQUIRED)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DVK_USE_PLATFORM_XCB_KHR")
 endif()
 
-# TODO(scotttodd): build assimp from CMake automatically.
+# Set preprocessor defines.
+set(CMAKE_CXX_FLAGS
+    "${CMAKE_CXX_FLAGS} -DNOMINMAX -DVK_PROTOTYPES -D_USE_MATH_DEFINES")
 
-message(STATUS ${VULKAN_LIB})
+# TODO(scotttodd): build assimp from CMake automatically.
 
 # Hello World Test.
 add_executable(HelloWorld src/hello_world.cc)
@@ -41,14 +46,6 @@ install(TARGETS HelloWorld DESTINATION bin)
 # GLM Include Test.
 add_executable(GLMInclude src/test_glm_include.cc)
 install(TARGETS GLMInclude DESTINATION bin)
-
-# Set BASE_DIRECTORY.
-if(NOT BASE_DIRECTORY)
-  set(BASE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-endif()
-
-message(STATUS "BASE_DIRECTORY = ${BASE_DIRECTORY}")
-message(STATUS "CMAKE_CURRENT_SOURCE_DIR = ${CMAKE_CURRENT_SOURCE_DIR}")
 
 # Find VulkanSDK.
 find_package(VulkanSDK REQUIRED)
