@@ -1,3 +1,6 @@
+# CMake file based off of
+# https://github.com/SaschaWillems/Vulkan/blob/master/CMakeLists.txt
+
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 cmake_policy(VERSION 2.8)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
@@ -7,11 +10,29 @@ set(NAME vulkan_experimentation)
 project(${NAME})
 
 include_directories(third_party)
-include_directories(third_party/glm)
-include_directories(third_party/SaschaWillems_Vulkan/base)
 include_directories(third_party/assimp/include)
 include_directories(third_party/gli)
-include_directories(src)
+include_directories(third_party/glm)
+include_directories(third_party/SaschaWillems_Vulkan/base)
+
+# Include cmake modules.
+set(CMAKE_MODULE_PATH
+  ${BASE_DIRECTORY}/cmake
+)
+
+if(WIN32)
+  find_library(ASSIMP_LIB NAMES assimp PATHS ${CMAKE_SOURCE_DIR}/libs/assimp)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DVK_USE_PLATFORM_WIN32_KHR")
+else()
+  find_library(ASSIMP_LIB NAMES assimp libassimp.dll.a
+               PATHS ${CMAKE_SOURCE_DIR}/third_party/libs/assimp)
+  find_package(XCB REQUIRED)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DVK_USE_PLATFORM_XCB_KHR")
+endif()
+
+# TODO(scotttodd): build assimp from CMake automatically.
+
+message(STATUS ${VULKAN_LIB})
 
 # Hello World Test.
 add_executable(HelloWorld src/hello_world.cc)
@@ -22,17 +43,12 @@ add_executable(GLMInclude src/test_glm_include.cc)
 install(TARGETS GLMInclude DESTINATION bin)
 
 # Set BASE_DIRECTORY.
-if (NOT BASE_DIRECTORY)
+if(NOT BASE_DIRECTORY)
   set(BASE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 endif()
 
 message(STATUS "BASE_DIRECTORY = ${BASE_DIRECTORY}")
 message(STATUS "CMAKE_CURRENT_SOURCE_DIR = ${CMAKE_CURRENT_SOURCE_DIR}")
-
-# Include cmake modules.
-set(CMAKE_MODULE_PATH
-  ${BASE_DIRECTORY}/third_party/nvidia/nvpro_shared_sources/cmake
-)
 
 # Find VulkanSDK.
 find_package(VulkanSDK REQUIRED)
@@ -48,8 +64,17 @@ else()
   message(SEND_ERROR "Did not find VulkanSDK, please resolve.")
 endif()
 
+# Find Assimp.
+# TODO(scotttodd): Figure out library here, maybe lib/ folder.
+# find_library(ASSIMP_LIB NAMES assimp )
+
+message(STATUS "VULKAN_LIB '${VULKAN_LIB}'")
+message(STATUS "WINLIBS '${WINLIBS}'")
+message(STATUS "ASSIMP_LIB '${ASSIMP_LIB}'")
+
 # VulkanSDK Include Test.
 add_executable(VulkanSDKInclude src/test_vulkan_sdk_include.cc)
+# target_link_libraries(VulkanSDKInclude ${VULKAN_LIB})
 install(TARGETS VulkanSDKInclude DESTINATION bin)
 
 # Triangle from SaschaWillems.

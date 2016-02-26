@@ -1,3 +1,28 @@
+# Sourced from https://github.com/nvpro-samples/shared_sources
+#
+#     Copyright (c) 2013, NVIDIA CORPORATION. All rights reserved.
+#
+#     Redistribution and use in source and binary forms, with or without
+#     modification, are permitted provided that the following conditions
+#     are met:
+#      * Redistributions of source code must retain the above copyright
+#        notice, this list of conditions and the following disclaimer.
+#      * Neither the name of NVIDIA CORPORATION nor the names of its
+#        contributors may be used to endorse or promote products derived
+#        from this software without specific prior written permission.
+#
+#     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS ``AS IS'' AND ANY
+#     EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+#     IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+#     PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+#     CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+#     EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#     PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+#     PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
+#     OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+#     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+#     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 # Try to find VulkanSDK project dll/so and headers.
 
 # Outputs.
@@ -129,13 +154,13 @@ if(VULKANSDK_ROOT_DIR)
           "${_vk_bin_folder}/VKstatic.1.lib" "${_vk_bin_folder}/VKstatic.1.lib" "")
       _find_files(GLSLANGVALIDATOR VULKANSDK_ROOT_DIR
           "${_vk_bin_folder}/glslangValidator.exe" "${_vk_bin_folder}/glslangValidator.exe" "")
-  endif(WIN32)
+  endif()
 
   if(UNIX)
     if(VULKANSDK_ROOT_DIR)
       message("Using system for vulkan sdk. ")
     endif()
-  endif(UNIX)
+  endif()
 
   # Locate Headers.
   _find_files(VULKANSDK_HEADERS VULKANSDK_ROOT_DIR
@@ -143,8 +168,8 @@ if(VULKANSDK_ROOT_DIR)
 
   if(VULKAN_LIB)
     set(VULKANSDK_FOUND "YES")
-  endif(VULKAN_LIB)
-else(VULKANSDK_ROOT_DIR)
+  endif()
+else()
   message(WARNING "
       VULKANSDK not found.
       Either env. VK_SDK_PATH should be set directly to the right
@@ -152,7 +177,7 @@ else(VULKANSDK_ROOT_DIR)
       VULKANSDK_LOCATION to the folder where VulkanSDK versions are
       put(C:\\VulkanSDK)"
 )
-endif(VULKANSDK_ROOT_DIR)
+endif()
 
 include(FindPackageHandleStandardArgs)
 
