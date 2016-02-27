@@ -299,3 +299,6 @@ _Pvt_Extensions
 ########################################################################
 
 [Bb]uild
+
+# Don't ignore 3d models in obj format
+!data/models/*.obj
