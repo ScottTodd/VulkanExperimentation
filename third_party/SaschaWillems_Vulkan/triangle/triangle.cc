@@ -603,8 +603,8 @@ public:
         shaderStages[0] = loadShaderGLSL("./../data/shaders/_test/test.vert", VK_SHADER_STAGE_VERTEX_BIT);
         shaderStages[1] = loadShaderGLSL("./../data/shaders/_test/test.frag", VK_SHADER_STAGE_FRAGMENT_BIT);
 #else
-        shaderStages[0] = loadShader("./../data/shaders/triangle.vert.spv", VK_SHADER_STAGE_VERTEX_BIT);
-        shaderStages[1] = loadShader("./../data/shaders/triangle.frag.spv", VK_SHADER_STAGE_FRAGMENT_BIT);
+        shaderStages[0] = loadShader("./../../data/shaders/triangle.vert.spv", VK_SHADER_STAGE_VERTEX_BIT);
+        shaderStages[1] = loadShader("./../../data/shaders/triangle.frag.spv", VK_SHADER_STAGE_FRAGMENT_BIT);
 #endif
 
         // Assign states

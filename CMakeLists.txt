@@ -41,6 +41,10 @@ message(STATUS "ASSIMP_LIB '${ASSIMP_LIB}'")
 
 include_directories(${VULKANSDK_INCLUDE_DIR})
 
+add_subdirectory(third_party/glm)
+add_subdirectory(third_party/gli)
+add_subdirectory(third_party/assimp)
+
 # Set preprocessor defines.
 set(CMAKE_CXX_FLAGS
     "${CMAKE_CXX_FLAGS} -DNOMINMAX -DVK_PROTOTYPES -D_USE_MATH_DEFINES")
@@ -67,6 +71,10 @@ install(TARGETS HelloWorld DESTINATION bin)
 add_executable(GLMInclude src/test_glm_include.cc)
 install(TARGETS GLMInclude DESTINATION bin)
 
+# GLI Include Test.
+add_executable(GLIInclude src/test_gli_include.cc)
+install(TARGETS GLIInclude DESTINATION bin)
+
 # VulkanSDK Include Test.
 add_executable(VulkanSDKInclude src/test_vulkan_sdk_include.cc)
 target_link_libraries(VulkanSDKInclude ${VULKAN_LIB})
@@ -78,6 +86,8 @@ target_link_libraries(WinMainTest ${WINLIBS})
 install(TARGETS WinMainTest DESTINATION bin)
 
 # Triangle from SaschaWillems.
-# add_executable(Triangle WIN32 third_party/SaschaWillems_Vulkan/triangle/triangle.cc)
-# target_link_libraries(Triangle ${VULKAN_LIB} ${ASSIMP_LIB} ${WINLIBS})
-# install(TARGETS Triangle DESTINATION bin)
+file(GLOB SOURCE third_party/SaschaWillems_Vulkan/base/*.cpp
+     third_party/SaschaWillems_Vulkan/triangle/*.cc)
+add_executable(Triangle WIN32 third_party/SaschaWillems_Vulkan/triangle/triangle.cc ${SOURCE})
+target_link_libraries(Triangle ${VULKAN_LIB} ${ASSIMP_LIB} ${WINLIBS})
+install(TARGETS Triangle DESTINATION bin)

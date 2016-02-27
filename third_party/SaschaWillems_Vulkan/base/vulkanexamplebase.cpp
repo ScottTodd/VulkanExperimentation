@@ -202,7 +202,7 @@ void VulkanExampleBase::prepare()
 	// Recreate setup command buffer for derived class
 	createSetupCommandBuffer();
 	// Create a simple texture loader class
-	textureLoader = new vkTools::VulkanTextureLoader(physicalDevice, device, queue, cmdPool);
+	// textureLoader = new vkTools::VulkanTextureLoader(physicalDevice, device, queue, cmdPool);
 }
 
 VkPipelineShaderStageCreateInfo VulkanExampleBase::loadShader(const char * fileName, VkShaderStageFlagBits stage)
@@ -435,10 +435,10 @@ VulkanExampleBase::~VulkanExampleBase()
 
 	vkDestroyPipelineCache(device, pipelineCache, nullptr);
 
-	if (textureLoader)
-	{
-		delete textureLoader;
-	}
+	// if (textureLoader)
+	// {
+	// 	delete textureLoader;
+	// }
 
 	vkDestroyCommandPool(device, cmdPool, nullptr);
 

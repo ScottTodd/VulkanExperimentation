@@ -32,7 +32,7 @@
 #include "vulkandebug.h"
 
 #include "vulkanswapchain.hpp"
-#include "vulkanTextureLoader.hpp"
+// #include "vulkanTextureLoader.hpp"
 #include "vulkanMeshLoader.hpp"
 
 #define deg_to_rad(deg) deg * float(M_PI / 180)
@@ -87,7 +87,7 @@ protected:
 	// Wraps the swap chain to present images (framebuffers) to the windowing system
 	VulkanSwapChain swapChain;
 	// Simple texture loader
-	vkTools::VulkanTextureLoader *textureLoader = nullptr;
+	// vkTools::VulkanTextureLoader *textureLoader = nullptr;
 public:
 	bool prepared = false;
 	uint32_t width = 1280;
