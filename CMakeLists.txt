@@ -68,9 +68,14 @@ add_executable(GLMInclude src/test_glm_include.cc)
 install(TARGETS GLMInclude DESTINATION bin)
 
 # VulkanSDK Include Test.
-add_executable(VulkanSDKInclude WIN32 src/test_vulkan_sdk_include.cc)
-target_link_libraries(VulkanSDKInclude ${VULKAN_LIB} ${ASSIMP_LIB} ${WINLIBS})
+add_executable(VulkanSDKInclude src/test_vulkan_sdk_include.cc)
+target_link_libraries(VulkanSDKInclude ${VULKAN_LIB})
 install(TARGETS VulkanSDKInclude DESTINATION bin)
+
+# WinMain Test.
+add_executable(WinMainTest WIN32 src/test_win_main.cc)
+target_link_libraries(WinMainTest ${WINLIBS})
+install(TARGETS WinMainTest DESTINATION bin)
 
 # Triangle from SaschaWillems.
 # add_executable(Triangle WIN32 third_party/SaschaWillems_Vulkan/triangle/triangle.cc)
